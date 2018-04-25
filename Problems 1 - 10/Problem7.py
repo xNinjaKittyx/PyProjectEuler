@@ -1,31 +1,39 @@
-import math
 
-n = 10000000
+import random
 
+# Let's take our previously used Miller-Rabin check.
+def composite_prime_check(n, k=5):
+    # Using Miller-Rabin
+    if n == 2:
+        return True
+    if not n % 2:
+        return False
+    
+    r, s = 0, n -1
+    while s % 2 == 0:
+        r += 1
+        s //= 2
+        
+    for _ in range(k):
+        a = random.randint(2, n - 2)
+        x = pow(a, s, n)
+        if x == 1 or x == n - 1:
+            continue
+        for _ in range(r - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
+    return True
+    
+primes = 6
+prime = 13
+current_num = 15
+while primes < 10001:
+    if composite_prime_check(current_num):
+        prime = current_num
+        primes += 1
+    current_num += 2
 
-A = [False, False]
-count = 2
-while count <= n:
-    A.append(True)
-    count += 1
-print("All Values Set To True")
-
-i = 2
-while i <= math.sqrt(n):
-    if A[i] is True:
-        j = pow(i, 2)
-        while j <= n:
-            A[j] = False
-            j += i
-    i += 1
-
-count = 0
-prime = 1
-for x in A:
-    if x is True:
-        if prime == 10001:
-            print("Prime #{0} : {1}".format(prime, count))
-        prime += 1
-    count += 1
-
-input()
+print(prime)
