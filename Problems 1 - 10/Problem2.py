@@ -1,18 +1,11 @@
-"""Finding the sum of all even fibonnachi numbers under 4 million"""
-fibnum = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-
-while True:
-    num = fibnum[-2] + fibnum[-1]
-    if num > 4000000:
-        break
-    fibnum.append(num)
-
-counter = 1
-last = len(fibnum)
+p = 1
+n = 1
 total = 0
-while counter < last:
-    total += fibnum[counter]
-    counter += 3
-print(total)
 
-a = input()
+while n < 4000000:
+    num = p + n
+    if num % 2 == 0:
+        total += num
+    p = n
+    n = num
+print(total)
